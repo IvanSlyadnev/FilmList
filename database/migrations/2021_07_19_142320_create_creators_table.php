@@ -17,7 +17,8 @@ class CreateCreatorsTable extends Migration
             $table->id();
             $table->string('name');
             $table->bigInteger('country_id')->unsigned();
-            $table->string('photo');
+            $table->foreign('country_id')->references('id')->on('countries')->onDelete('cascade');
+            $table->string('photo')->nullable();
             $table->timestamps();
         });
     }

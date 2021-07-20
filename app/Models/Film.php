@@ -13,8 +13,24 @@ class Film extends Model
         'id', 'name', 'year', 'budget', 'description', 'rate', 'length', 'user_id'
     ];
 
-    public function creator () {
-        return $this->belongsTo(User::class);
+    public function user () {
+        return $this->belongsTo(User::class, 'user_id');
+    }
+
+    public function genres() {
+        return $this->belongsToMany(Genre::class, 'film_genre');
+    }
+
+    public function marks() {
+        return $this->hasMany(Mark::class);
+    }
+
+    public function comments() {
+        return $this->belongsToMany(User::class, 'comments')->withPivot('name');
+    }
+
+    public function countries() {
+        return $this->belongsToMany(Country::class, 'film_country');
     }
 
 }

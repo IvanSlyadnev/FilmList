@@ -23,6 +23,8 @@ class CreateFilmsTable extends Migration
             $table->text('description')->nullable();
             $table->float('rate')->default(0);
             $table->integer('length');
+            $table->string('photo')->nullable();
+            $table->integer('views')->default(0);
             $table->timestamps();
         });
     }
