@@ -10,7 +10,7 @@ class Film extends Model
     use HasFactory;
 
     protected $fillable = [
-        'id', 'name', 'year', 'budget', 'description', 'rate', 'length', 'user_id'
+        'name', 'year', 'budget', 'description', 'rate', 'length', 'user_id'
     ];
 
     public function user () {
@@ -31,6 +31,10 @@ class Film extends Model
 
     public function countries() {
         return $this->belongsToMany(Country::class, 'film_country');
+    }
+
+    public function creators() {
+        return $this->belongsToMany(Creator::class, 'film_creator');
     }
 
 }
