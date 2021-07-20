@@ -27,7 +27,6 @@ Route::get('/', function () {
 
 Route::get('films', 'FilmController@index')->name('films.index');
 Route::get('film/{film}/show', 'FilmController@show')->name('film.show');
-Route::get('films/store', 'FilmController@store');
 
 Route::group(['middleware' => ['auth']], function () {
     Route::resource('films', 'FilmController')->except('index', 'show', 'update');
