@@ -24,6 +24,14 @@ Route::get('/', function () {
     ]);
 });
 
+
+Route::get('films', 'FilmController@index')->name('films.index');
+Route::get('film/{film}/show', 'FilmController@show')->name('film.show');
+
+Route::group(['middleware' => ['auth']], function () {
+    Route::resource('films', 'FilmController')->except('index', 'show', 'update');
+});
+
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
     return Inertia::render('Dashboard');
 })->name('dashboard');

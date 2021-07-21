@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class RoleSeeder extends Seeder
 {
@@ -23,5 +24,11 @@ class RoleSeeder extends Seeder
                 'name' => 'Фильмограф'
             ]
         ];
+        foreach ($roles as $role) {
+            DB::table('roles')->insert([
+                'id' => $role['id'],
+                'name' => $role['name']
+            ]);
+        }
     }
 }
