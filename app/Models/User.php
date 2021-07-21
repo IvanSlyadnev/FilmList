@@ -58,4 +58,12 @@ class User extends Authenticatable
     protected $appends = [
         'profile_photo_url',
     ];
+
+    public function films () {
+        return $this->hasMany(Film::class);
+    }
+
+    public function comments() {
+        return $this->belongsToMany(User::class, 'comments')->withPivot('name');
+    }
 }

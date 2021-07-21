@@ -4,6 +4,7 @@ use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use App\Http\Controllers\FilmController;
+use App\Http\Controllers\CommentController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -25,9 +26,11 @@ Route::get('/', function () {
 });
 
 Route::get('films', [FilmController::class, 'index'])->name('films.index');
-Route::get('film/{film}/show', [FilmController::class, 'show'])->name('film.show');
+Route::get('films/{film}/show', [FilmController::class, 'show'])->name('film.show');
 
 Route::group(['middleware' => ['auth']], function () {
+    Route::post('films/{film}/comments', [CommentController::class, 'store'])->name('comment.store');
+    Route::delete('comments/{film}/{comment}', [CommentController::class, 'destroy'])->name('comment.delete');
     Route::resource('films', FilmController::class)->except('index', 'show', 'update');
 });
 
