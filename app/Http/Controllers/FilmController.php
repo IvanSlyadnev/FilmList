@@ -54,31 +54,6 @@ class FilmController extends Controller
      */
     public function store(Request $request)
     {
-        $json = json_decode('
-            {
-                "id" : 8,
-                "name" : "Фильм",
-                "year" : 2020,
-                "budget" : 1000,
-                "description" : "Описание",
-                "length" : 100,
-                "genres" : [1],
-                "countries" : [2],
-                "creators" : [
-                    {
-                        "id" : 1,
-                        "roles" : [1,3]
-                    },
-                    {
-                        "id" : 2,
-                        "roles" : [1]
-                    }
-                ]
-            }
-        ', true);
-
-        $request->merge(['film' => $json]);
-
         $parametrs = collect($request->film)->only((new Film())->getFillable())->toArray();
         $parametrs['user_id'] = $request->user()->id;
         if ($film = Film::find($request->film['id'])) {
