@@ -84,7 +84,7 @@ class FilmController extends Controller
     public function show(Film $film)
     {
         return Inertia::render('FilmShow', [
-            'film' => $film->toArray()
+            'film' => $film->getAttributes()
         ]);
     }
 
