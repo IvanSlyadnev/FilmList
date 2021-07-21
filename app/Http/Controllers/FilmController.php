@@ -20,14 +20,14 @@ class FilmController extends Controller
     public function index(Request $request)
     {
         return Inertia::render('FilmListView', [
-            'films' => json_encode(json_encode(Film::all()->map(function ($film) {
+            'films' => json_encode(Film::all()->map(function ($film) {
                 return [
                     'name' => $film['name'],
                     'photo' => $film['photo'],
                     'rate' => $film['rate'],
                     'views' => $film['views']
                 ];
-            }))),
+            })),
             'roles' => json_encode($request->user() ? $request->user()->roles : '')
         ]);
     }

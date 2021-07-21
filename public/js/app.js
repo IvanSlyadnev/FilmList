@@ -23618,11 +23618,8 @@ __webpack_require__.r(__webpack_exports__);
 var _hoisted_1 = {
   "class": ""
 };
-
-var _hoisted_2 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" хуй ");
-
 function render(_ctx, _cache, $props, $setup, $data, $options) {
-  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <vuetable\n      ref=\"vuetable\"\n      :api-mode=\"false\"\n      :data=\"data\"\n      :fields=\"fields\"\n      :css=\"table\"\n    ></vuetable> "), _hoisted_2]);
+  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <vuetable\n      ref=\"vuetable\"\n      :api-mode=\"false\"\n      :data=\"data\"\n      :fields=\"fields\"\n      :css=\"table\"\n    ></vuetable> ")]);
 }
 
 /***/ }),

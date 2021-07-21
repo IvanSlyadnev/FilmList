@@ -3,7 +3,7 @@
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
-
+use App\Http\Controllers\FilmController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -24,11 +24,11 @@ Route::get('/', function () {
     ]);
 });
 
-Route::get('films', 'FilmController@index')->name('films.index');
-Route::get('film/{film}/show', 'FilmController@show')->name('film.show');
+Route::get('films', [FilmController::class, 'index'])->name('films.index');
+Route::get('film/{film}/show', [FilmController::class, 'show'])->name('film.show');
 
 Route::group(['middleware' => ['auth']], function () {
-    Route::resource('films', 'FilmController')->except('index', 'show', 'update');
+    Route::resource('films', FilmController::class)->except('index', 'show', 'update');
 });
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
