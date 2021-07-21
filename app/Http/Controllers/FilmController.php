@@ -97,7 +97,7 @@ class FilmController extends Controller
     public function edit(Film $film)
     {
         return Inertia::render('FilmCreateEdit', [
-            'film' => $film,
+            'film' => $film->getAttributes(),
             'countries' => Country::pluck('id', 'name')->toArray(),
             'creators'  => Creator::pluck('id', 'name')->toArray(),
             'film_roles' => FilmRole::pluck('id', 'name')->toArray()
