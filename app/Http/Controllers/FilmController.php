@@ -19,7 +19,7 @@ class FilmController extends Controller
      */
     public function index(Request $request)
     {
-        return Inertia::render('List', [
+        return Inertia::render('FilmListView', [
             'films' => json_encode(json_encode(Film::all()->map(function ($film) {
                 return [
                     'name' => $film['name'],
@@ -28,7 +28,7 @@ class FilmController extends Controller
                     'views' => $film['views']
                 ];
             }))),
-            'roles' => json_encode($request->user()->roles)
+            'roles' => json_encode($request->user() ? $request->user()->roles : '')
         ]);
     }
 
@@ -83,7 +83,9 @@ class FilmController extends Controller
      */
     public function show(Film $film)
     {
-        dd($film);
+        return Inertia::render('FilmShow', [
+            'film' => $film->toArray()
+        ]);
     }
 
     /**

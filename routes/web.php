@@ -16,14 +16,13 @@ use Inertia\Inertia;
 */
 
 Route::get('/', function () {
-    return Inertia::render('Welcome', [
+    return Inertia::render('App', [
         'canLogin' => Route::has('login'),
         'canRegister' => Route::has('register'),
         'laravelVersion' => Application::VERSION,
         'phpVersion' => PHP_VERSION,
     ]);
 });
-
 
 Route::get('films', 'FilmController@index')->name('films.index');
 Route::get('film/{film}/show', 'FilmController@show')->name('film.show');
