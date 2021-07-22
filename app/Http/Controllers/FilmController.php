@@ -73,7 +73,6 @@ class FilmController extends Controller
         $film->countries()->sync($request->film['countries']);
 
         return redirect()->route('film.show', $film);
-
     }
 
     /**
@@ -98,7 +97,6 @@ class FilmController extends Controller
      */
     public function edit(Film $film)
     {
-        dd($film->all);
         return Inertia::render('FilmCreateEdit', [
             'film' => $film->all,
             'countries' => Country::pluck('id', 'name')->toArray(),
