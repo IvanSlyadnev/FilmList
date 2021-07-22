@@ -17,12 +17,7 @@ use App\Http\Controllers\CommentController;
 */
 
 Route::get('/', function () {
-    return Inertia::render('App', [
-        'canLogin' => Route::has('login'),
-        'canRegister' => Route::has('register'),
-        'laravelVersion' => Application::VERSION,
-        'phpVersion' => PHP_VERSION,
-    ]);
+    return redirect()->route('films.index');
 });
 
 Route::get('films', [FilmController::class, 'index'])->name('films.index');
