@@ -42,10 +42,18 @@ class FilmController extends Controller
     public function create()
     {
         return Inertia::render('FilmAddEditView', [
-            'genres' => Genre::pluck('id', 'name')->toArray(),
-            'countries' => Country::pluck('id', 'name')->toArray(),
-            'creators'  => Creator::pluck('id', 'name')->toArray(),
-            'film_roles' => FilmRole::pluck('id', 'name')->toArray()
+            'genres' => Genre::all()->map(function ($genre) {
+                return ['id' => $genre->id, 'name' => $genre->name];
+            })->toArray(),
+            'countries' => Country::all()->map(function ($country) {
+                return ['id' => $country->id, 'name' => $country->name];
+            })->toArray(),
+            'creators'  => Creator::all()->map(function ($creator) {
+                return ['id' => $creator->id, 'name' => $creator->name];
+            })->toArray(),
+            'film_roles' => FilmRole::all()->map(function ($role) {
+                return ['id' => $role->id, 'name' => $role->name];
+            })->toArray()
         ]);
     }
 
@@ -106,10 +114,18 @@ class FilmController extends Controller
     {
         return Inertia::render('FilmAddEditView', [
             'film' => $film->all,
-            'genres' => Genre::pluck('id', 'name')->toArray(),
-            'countries' => Country::pluck('id', 'name')->toArray(),
-            'creators'  => Creator::pluck('id', 'name')->toArray(),
-            'film_roles' => FilmRole::pluck('id', 'name')->toArray()
+            'genres' => Genre::all()->map(function ($genre) {
+                return ['id' => $genre->id, 'name' => $genre->name];
+            })->toArray(),
+            'countries' => Country::all()->map(function ($country) {
+                return ['id' => $country->id, 'name' => $country->name];
+            })->toArray(),
+            'creators'  => Creator::all()->map(function ($creator) {
+                return ['id' => $creator->id, 'name' => $creator->name];
+            })->toArray(),
+            'film_roles' => FilmRole::all()->map(function ($role) {
+                return ['id' => $role->id, 'name' => $role->name];
+            })->toArray()
         ]);
     }
 
