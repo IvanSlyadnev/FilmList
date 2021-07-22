@@ -29,6 +29,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::delete('comments/{film}/{comment}', [CommentController::class, 'destroy'])->name('comment.delete');
     Route::resource('films', FilmController::class)->except('index', 'show', 'update');
     Route::resource('creators', CreatorController::class);
+    Route::get('films/mark', [\App\Http\Controllers\MarkController::class, 'setMark']);
 });
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {

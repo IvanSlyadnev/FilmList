@@ -22,7 +22,7 @@ class Film extends Model
     }
 
     public function marks() {
-        return $this->hasMany(Mark::class);
+        return $this->hasMany(Mark::class)->withPivot('value');
     }
 
     public function comments() {
