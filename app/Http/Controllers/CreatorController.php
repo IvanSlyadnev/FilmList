@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Country;
 use App\Models\Creator;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -46,7 +47,7 @@ class CreatorController extends Controller
     public function create()
     {
         return Inertia::render('CreatorAdd', [
-            'countries' => Country::mapAll()
+            'countries' => Country::mapAll(new Country())
         ]);
     }
 
@@ -78,7 +79,7 @@ class CreatorController extends Controller
     {
         return Inertia::render('CreatorShow', [
             'creator' => $creator->all,
-            'countries' => Country::mapAll()
+            'countries' => Country::mapAll(new Country())
         ]);
     }
 
@@ -92,7 +93,7 @@ class CreatorController extends Controller
     {
         return Inertia::render('CreatorAdd', [
             'creator' => $creator->all,
-            'countries' => Country::mapAll()
+            'countries' => Country::mapAll(new Country())
         ]);
     }
 
