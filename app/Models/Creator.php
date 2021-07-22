@@ -2,12 +2,14 @@
 
 namespace App\Models;
 
+use App\Traits\Maping;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Creator extends Model
 {
     use HasFactory;
+    use Maping;
 
     protected $fillable = [
         'name', 'country_id', 'photo', 'biography', 'age'
