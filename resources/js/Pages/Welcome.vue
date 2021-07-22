@@ -370,7 +370,7 @@
 </style>
 
 <script>
-import App from "./App.vue";
+import App from "./Layout.vue";
 export default {
   props: {
     canLogin: Boolean,
