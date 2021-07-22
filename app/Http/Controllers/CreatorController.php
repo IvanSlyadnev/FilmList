@@ -46,7 +46,7 @@ class CreatorController extends Controller
     public function create()
     {
         return Inertia::render('CreatorAdd', [
-            'countries' => Country::pluck('id', 'name')
+            'countries' => Country::mapAll()
         ]);
     }
 
@@ -78,7 +78,7 @@ class CreatorController extends Controller
     {
         return Inertia::render('CreatorShow', [
             'creator' => $creator->all,
-            'countries' => Country::pluck('id', 'name')
+            'countries' => Country::mapAll()
         ]);
     }
 
@@ -92,7 +92,7 @@ class CreatorController extends Controller
     {
         return Inertia::render('CreatorAdd', [
             'creator' => $creator->all,
-            'countries' => Country::pluck('id', 'name')
+            'countries' => Country::mapAll()
         ]);
     }
 
