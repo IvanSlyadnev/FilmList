@@ -82,10 +82,11 @@ class FilmController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Film $film)
+    public function show(Request $request,Film $film)
     {
         return Inertia::render('FilmShow', [
-            'film' => $film->getAttributes()
+            'film' => $film->all,
+            'can_edit' => $request->user() ? $request->user()->canEditFilm($film) : false
         ]);
     }
 
@@ -97,8 +98,9 @@ class FilmController extends Controller
      */
     public function edit(Film $film)
     {
+        dd($film->all);
         return Inertia::render('FilmCreateEdit', [
-            'film' => $film->getAttributes(),
+            'film' => $film->all,
             'countries' => Country::pluck('id', 'name')->toArray(),
             'creators'  => Creator::pluck('id', 'name')->toArray(),
             'film_roles' => FilmRole::pluck('id', 'name')->toArray()
