@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Genre;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -41,6 +42,7 @@ class FilmController extends Controller
     public function create()
     {
         return Inertia::render('FilmCreateEdit', [
+            'genres' => Genre::pluck('id', 'name')->toArray(),
             'countries' => Country::pluck('id', 'name')->toArray(),
             'creators'  => Creator::pluck('id', 'name')->toArray(),
             'film_roles' => FilmRole::pluck('id', 'name')->toArray()
@@ -104,6 +106,7 @@ class FilmController extends Controller
     {
         return Inertia::render('FilmCreateEdit', [
             'film' => $film->all,
+            'genres' => Genre::pluck('id', 'name')->toArray(),
             'countries' => Country::pluck('id', 'name')->toArray(),
             'creators'  => Creator::pluck('id', 'name')->toArray(),
             'film_roles' => FilmRole::pluck('id', 'name')->toArray()
