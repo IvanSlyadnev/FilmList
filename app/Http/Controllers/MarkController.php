@@ -8,8 +8,8 @@ use Illuminate\Http\Request;
 class MarkController extends Controller
 {
     public function setMark(Request $request, Film $film) {
-        $request->merge(['mark' => 4]);
+        $film->marks()->sync([$request->user()->id => ['value' => $request->mark]]);
 
-        $film->marks()->syncWithPivot([$request->user()->id], [$request->mark]);
+        return redirect()->route('films.show', $film);
     }
 }
