@@ -10,7 +10,7 @@ class Creator extends Model
     use HasFactory;
 
     protected $fillable = [
-        'id', 'name', 'country_id', 'photo'
+        'name', 'country_id', 'photo', 'biography', 'age'
     ];
 
     public function country() {
@@ -23,6 +23,12 @@ class Creator extends Model
 
     public function roles() {
         return $this->belongsToMany(FilmRole::class, 'film_creator')->withPivot('film_id');
+    }
+
+    public function getAllAttribute() {
+        $attributes = $this->getAttributes();
+        $attributes['country'] = $this->country->name;
+        return $attributes;
     }
 
 }
