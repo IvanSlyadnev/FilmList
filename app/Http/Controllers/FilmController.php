@@ -41,7 +41,7 @@ class FilmController extends Controller
      */
     public function create()
     {
-        return Inertia::render('FilmCreateEdit', [
+        return Inertia::render('FilmAddEditView', [
             'genres' => Genre::pluck('id', 'name')->toArray(),
             'countries' => Country::pluck('id', 'name')->toArray(),
             'creators'  => Creator::pluck('id', 'name')->toArray(),
@@ -104,7 +104,7 @@ class FilmController extends Controller
      */
     public function edit(Film $film)
     {
-        return Inertia::render('FilmCreateEdit', [
+        return Inertia::render('FilmAddEditView', [
             'film' => $film->all,
             'genres' => Genre::pluck('id', 'name')->toArray(),
             'countries' => Country::pluck('id', 'name')->toArray(),
