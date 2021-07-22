@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CreatorController;
+use App\Http\Controllers\MarkController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -29,6 +30,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::delete('comments/{film}/{comment}', [CommentController::class, 'destroy'])->name('comment.delete');
     Route::resource('films', FilmController::class)->except('index', 'show', 'update');
     Route::resource('creators', CreatorController::class);
+    Route::get('films/{film}/mark', [MarkController::class, 'setMark'])->name('film.mark');
 });
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {

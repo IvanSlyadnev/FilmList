@@ -22,7 +22,7 @@ class Film extends Model
     }
 
     public function marks() {
-        return $this->hasMany(Mark::class);
+        return $this->belongsToMany(User::class, 'marks')->withPivot('value');
     }
 
     public function comments() {
@@ -43,6 +43,7 @@ class Film extends Model
         $attributes['countries'] = $this->countries->map(function ($country) {
             return $country->name;
         })->toArray();
+        $attributes['rate'] = $this->rate;
         $attributes['creators'] = $this->creators->map(function ($actor){
             return [
                 'id' => $actor->id,
@@ -59,6 +60,10 @@ class Film extends Model
 
     public function viewed() {
         return $this->belongsToMany(User::class, 'user_view_film');
+    }
+
+    public function getRateAttribute() {
+        return $this->marks()->sum('value') / $this->marks()->count();
     }
 
 }
