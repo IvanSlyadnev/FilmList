@@ -66,4 +66,20 @@ class User extends Authenticatable
     public function comments() {
         return $this->belongsToMany(User::class, 'comments')->withPivot('name');
     }
+
+    public function roles() {
+        return $this->belongsToMany(Role::class, 'role_user');
+    }
+
+    public function isAdmin() {
+        return $this->roles()->where('name', 'Администратор')->exists();
+    }
+
+    public function isFilmographer() {
+        return $this->roles()->where('name', 'Фильмограф')->exists();
+    }
+
+    public function canEditFilm($film) {
+        return $this->isAdmin() || ($this->isFilmographer() && $this->films->contains($film));
+    }
 }
