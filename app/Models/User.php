@@ -82,4 +82,8 @@ class User extends Authenticatable
     public function canEditFilm($film) {
         return $this->isAdmin() || ($this->isFilmographer() && $this->films->contains($film));
     }
+
+    public function views() {
+        return $this->belongsToMany(Film::class, 'user_view_film');
+    }
 }

@@ -83,6 +83,11 @@ class FilmController extends Controller
      */
     public function show(Request $request,Film $film)
     {
+        if (!$film->viewed()->where('user_id', $request->user()->id)->exists()) {
+            $film->viewed()->sync($request->user()->id);
+            $film->update(['views' => $film->views+1]);
+        }
+
         return Inertia::render('FilmShow', [
             'film' => $film->all,
             'can_edit' => $request->user() ? $request->user()->canEditFilm($film) : false

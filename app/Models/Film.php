@@ -57,4 +57,8 @@ class Film extends Model
         return $attributes;
     }
 
+    public function viewed() {
+        return $this->belongsToMany(User::class, 'user_view_film');
+    }
+
 }
