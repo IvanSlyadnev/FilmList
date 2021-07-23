@@ -37,6 +37,10 @@ class Film extends Model
         return $this->belongsToMany(Creator::class, 'film_creator')->distinct();
     }
 
+    public function roles() {
+        return $this->belongsToMany(FilmRole::class, 'film_creator')->distinct();
+    }
+
     public function getAllAttribute()
     {
         $attributes = $this->getAttributes();

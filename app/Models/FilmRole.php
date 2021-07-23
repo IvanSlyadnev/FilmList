@@ -15,5 +15,9 @@ class FilmRole extends Model
         'id', 'name'
     ];
 
+    public function creators() {
+        return $this->belongsToMany(Creator::class, 'film_creator')->withPivot('film_id');
+    }
+
 
 }
