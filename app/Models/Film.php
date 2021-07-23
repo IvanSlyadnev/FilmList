@@ -46,6 +46,9 @@ class Film extends Model
         $attributes['comments'] = $this->comments->map(function ($comment) {
             return ['name'=>$comment->pivot->name, 'user'=>User::find($comment->pivot->user_id)->name];
         })->toArray();
+        $attributes['genres'] = $this->genres->map(function ($genre) {
+            return $genre->id;
+        });
         $attributes['creators'] = $this->creators->map(function ($actor){
             return [
                 'id' => $actor->id,
