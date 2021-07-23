@@ -19,7 +19,7 @@
       </svg>
     </div>
     <div class="bg-gray-100 m-1 rounded w-full h-14 grid grid-cols-12 gap-4">
-      <label
+      <a
         class="
           col-start-1 col-end-3
           flex
@@ -28,9 +28,10 @@
           text-2xl
           font-semibold
         "
+        href="/"
       >
         FilmList
-      </label>
+      </a>
       <input
         type="text"
         class="

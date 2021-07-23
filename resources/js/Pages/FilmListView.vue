@@ -1,14 +1,40 @@
 <template>
   <layout>
-    <vue-table-lite
-      id="film-table"
-      :is-static-mode="true"
-      :has-checkbox="false"
-      :columns="fields"
-      :rows="data"
-      :sortable="sort"
-      :total="24"
-    />
+    <div class="mt-4 mx-6 grid grid-cols-12 gap-4">
+      <div class="col-start-1 col-end-10 text-2xl font-semibold mb-4">
+        Список фильмов
+      </div>
+      <a
+        class="
+          col-start-11 col-span-2
+          p-2
+          flex
+          bg-white
+          border border-white
+          items-center
+          justify-center
+          text-gray-500
+          rounded
+          transition
+          delay-50
+          hover:border-gray-200
+        "
+        :href="route('films.create')"
+        >Добавить фильм</a
+      >
+    </div>
+    <div class="px-4 bg-gray-100">
+      <vue-table-lite
+        style="background-color: inherit"
+        id="film-table"
+        :is-static-mode="true"
+        :has-checkbox="false"
+        :columns="fields"
+        :rows="films"
+        :sortable="sort"
+        :total="totalCount"
+      />
+    </div>
   </layout>
 </template>
 
@@ -16,6 +42,7 @@
 import Layout from "./Layout";
 import VueTableLite from "vue3-table-lite";
 export default {
+  props: ["films"],
   components: {
     VueTableLite,
   },
@@ -25,20 +52,26 @@ export default {
       fields: [
         {
           isKey: true,
-          label: "name",
+          label: "ID",
+          field: "id",
+          sortable: true,
+        },
+        {
+          isKey: false,
+          label: "Название",
           field: "name",
           sortable: true,
         },
         {
           isKey: false,
-          label: "email",
-          field: "email",
+          label: "Рейтниг",
+          field: "rate",
           sortable: true,
         },
         {
           isKey: false,
-          label: "birthdate",
-          field: "birthdate",
+          label: "Просмотры",
+          field: "views",
           sortable: true,
         },
       ],
@@ -199,6 +232,11 @@ export default {
         noDataAvailable: "",
       },
     };
+  },
+  computed: {
+    totalCount() {
+      return this.films.length;
+    },
   },
 };
 </script>
