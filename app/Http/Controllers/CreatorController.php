@@ -17,7 +17,7 @@ class CreatorController extends Controller
      */
     public function index(Request $request)
     {
-        $request->merge(['role' => 1]);
+        $this->authorize('viewAny', Creator::class);
         if ($request->role) {
             $creators = Creator::whereHas('roles', function ($query) use ($request){
                 $query->where('film_roles.id', $request->role);
@@ -46,6 +46,7 @@ class CreatorController extends Controller
      */
     public function create()
     {
+        $this->authorize('create', Creator::class);
         return Inertia::render('CreatorAdd', [
             'countries' => Country::mapAll(new Country())
         ]);
@@ -59,6 +60,7 @@ class CreatorController extends Controller
      */
     public function store(Request $request)
     {
+        $this->authorize('create', Creator::class);
         if ($creator = Creator::find($request->creator['id'])) {
             $creator->update($request->creator);
         } else {
@@ -77,6 +79,7 @@ class CreatorController extends Controller
      */
     public function show(Creator $creator)
     {
+        $this->authorize('view', $creator);
         return Inertia::render('CreatorShow', [
             'creator' => $creator->all,
             'countries' => Country::mapAll(new Country())
@@ -91,6 +94,7 @@ class CreatorController extends Controller
      */
     public function edit(Creator $creator)
     {
+        $this->authorize('update', $creator);
         return Inertia::render('CreatorAdd', [
             'creator' => $creator->all,
             'countries' => Country::mapAll(new Country())
@@ -117,6 +121,7 @@ class CreatorController extends Controller
      */
     public function destroy(Creator $creator)
     {
+        $this->authorize('delete', $creator);
         $creator->delete();
     }
 }

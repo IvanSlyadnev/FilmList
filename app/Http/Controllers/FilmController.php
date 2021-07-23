@@ -41,6 +41,7 @@ class FilmController extends Controller
      */
     public function create()
     {
+        $this->authorize('create', Film::class);
         return Inertia::render('FilmAddEditView', [
             'genres' => Genre::pluck('id', 'name')->toArray(),
             'countries' => Country::pluck('id', 'name')->toArray(),
@@ -57,6 +58,7 @@ class FilmController extends Controller
      */
     public function store(Request $request)
     {
+        $this->authorize('create', Film::class);
         $parametrs = collect($request->film)->only((new Film())->getFillable())->toArray();
         $parametrs['user_id'] = $request->user()->id;
         if ($film = Film::find($request->film['id'])) {
@@ -85,7 +87,7 @@ class FilmController extends Controller
      */
     public function show(Request $request,Film $film)
     {
-        if (!$film->viewed()->where('user_id', $request->user()->id)->exists()) {
+        if ($request->user() && !$film->viewed()->where('user_id', $request->user()->id)->exists()) {
             $film->viewed()->sync($request->user()->id);
             $film->update(['views' => $film->views+1]);
         }
@@ -133,6 +135,7 @@ class FilmController extends Controller
      */
     public function destroy(Film $film)
     {
+        $this->authorize('delete', $film);
         $film->delete();
     }
 }
