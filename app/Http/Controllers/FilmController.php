@@ -44,10 +44,10 @@ class FilmController extends Controller
     {
         $this->authorize('create', Film::class);
         return Inertia::render('FilmAddEditView', [
-            'genres' => Genre::mapAll(new Genre()),
-            'countries' => Country::mapAll(new Country()),
-            'creators'  => Creator::mapAll(new Creator()),
-            'film_roles' => FilmRole::mapAll(new FilmRole()),
+            'genres' => Genre::mapAll(Genre::all()),
+            'countries' => Country::mapAll(Country::all()),
+            'creators'  => Creator::mapAll(Creator::all()),
+            'film_roles' => FilmRole::mapAll(FilmRole::all()),
         ]);
     }
 
@@ -93,10 +93,17 @@ class FilmController extends Controller
         }
 
         return Inertia::render('FilmShowView', [
-            'film' => $film->all,
+            'film' => $film->getAttributes(),
             'comments' => $film->comments->map(function ($comment) {
                 return ['name'=>$comment->pivot->name, 'user'=>User::find($comment->pivot->user_id)->name];
             })->toArray(),
+            'creators' => $film->roles->map(function ($role) use($film) {
+                return ['name' => $role->name, 'creators' => $role->creators()->wherePivot('film_id', $film->id)->get()->map(function ($creator) {
+                    return $creator->name;
+                })->toArray()];
+            })->toArray(),
+            'genres' => Genre::mapAll($film->genres),
+            'countries' => Genre::mapAll($film->countries),
             'can_edit' => $request->user() ? $request->user()->canEditFilm($film) : false
         ]);
     }
@@ -111,10 +118,10 @@ class FilmController extends Controller
     {
         return Inertia::render('FilmAddEditView', [
             'film' => $film->all,
-            'genres' => Genre::mapAll(new Genre()),
-            'countries' => Country::mapAll(new Country()),
-            'creators'  => Creator::mapAll(new Creator()),
-            'film_roles' => FilmRole::mapAll(new FilmRole()),
+            'genres' => Genre::mapAll(Genre::all()),
+            'countries' => Country::mapAll(Country::all()),
+            'creators'  => Creator::mapAll(Creator::all()),
+            'film_roles' => FilmRole::mapAll(FilmRole::all()),
         ]);
     }
 
