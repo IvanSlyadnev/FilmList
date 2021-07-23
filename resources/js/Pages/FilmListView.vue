@@ -1,40 +1,45 @@
 <template>
-  <div class="">
-    <!-- <vuetable
-      ref="vuetable"
-      :api-mode="false"
-      :data="data"
-      :fields="fields"
-      :css="table"
-    ></vuetable> -->
-  </div>
+  <layout>
+    <vue-table-lite
+      id="film-table"
+      :is-static-mode="true"
+      :has-checkbox="false"
+      :columns="fields"
+      :rows="data"
+      :sortable="sort"
+      :total="24"
+    />
+  </layout>
 </template>
 
 <script>
-// import Vuetable from "vuetable-2/src/components/Vuetable";
-
+import Layout from "./Layout";
+import VueTableLite from "vue3-table-lite";
 export default {
   components: {
-    // Vuetable,
+    VueTableLite,
   },
+  layout: Layout,
   data() {
     return {
       fields: [
         {
-          name: "name",
-          title:
-            '<span class="orange glyphicon glyphicon-user"></span> Full Name',
-          sortField: "name",
+          isKey: true,
+          label: "name",
+          field: "name",
+          sortable: true,
         },
         {
-          name: "email",
-          title: "Email",
-          sortField: "email",
+          isKey: false,
+          label: "email",
+          field: "email",
+          sortable: true,
         },
         {
-          name: "birthdate",
-          title: "birthdate",
-          sortField: "birthdate",
+          isKey: false,
+          label: "birthdate",
+          field: "birthdate",
+          sortable: true,
         },
       ],
       data: [
@@ -45,24 +50,153 @@ export default {
           birthdate: "2000-xx-xx",
         },
         {
-          id: 50,
+          id: 2,
           name: "name2",
           email: "222@xxx.xxx",
           birthdate: "1900-xx-xx",
         },
+        {
+          id: 3,
+          name: "name3",
+          email: "333@xxx.xxx",
+          birthdate: "1900-xx-xx",
+        },
+        {
+          id: 1,
+          name: "name1",
+          email: "111@xxx.xxx",
+          birthdate: "2000-xx-xx",
+        },
+        {
+          id: 2,
+          name: "name2",
+          email: "222@xxx.xxx",
+          birthdate: "1900-xx-xx",
+        },
+        {
+          id: 3,
+          name: "name3",
+          email: "333@xxx.xxx",
+          birthdate: "1900-xx-xx",
+        },
+        {
+          id: 1,
+          name: "name1",
+          email: "111@xxx.xxx",
+          birthdate: "2000-xx-xx",
+        },
+        {
+          id: 2,
+          name: "name2",
+          email: "222@xxx.xxx",
+          birthdate: "1900-xx-xx",
+        },
+        {
+          id: 3,
+          name: "name3",
+          email: "333@xxx.xxx",
+          birthdate: "1900-xx-xx",
+        },
+        {
+          id: 1,
+          name: "name1",
+          email: "111@xxx.xxx",
+          birthdate: "2000-xx-xx",
+        },
+        {
+          id: 2,
+          name: "name2",
+          email: "222@xxx.xxx",
+          birthdate: "1900-xx-xx",
+        },
+        {
+          id: 3,
+          name: "name3",
+          email: "333@xxx.xxx",
+          birthdate: "1900-xx-xx",
+        },
+        {
+          id: 1,
+          name: "name1",
+          email: "111@xxx.xxx",
+          birthdate: "2000-xx-xx",
+        },
+        {
+          id: 2,
+          name: "name2",
+          email: "222@xxx.xxx",
+          birthdate: "1900-xx-xx",
+        },
+        {
+          id: 3,
+          name: "name3",
+          email: "333@xxx.xxx",
+          birthdate: "1900-xx-xx",
+        },
+        {
+          id: 1,
+          name: "name1",
+          email: "111@xxx.xxx",
+          birthdate: "2000-xx-xx",
+        },
+        {
+          id: 2,
+          name: "name2",
+          email: "222@xxx.xxx",
+          birthdate: "1900-xx-xx",
+        },
+        {
+          id: 3,
+          name: "name3",
+          email: "333@xxx.xxx",
+          birthdate: "1900-xx-xx",
+        },
+        {
+          id: 1,
+          name: "name1",
+          email: "111@xxx.xxx",
+          birthdate: "2000-xx-xx",
+        },
+        {
+          id: 2,
+          name: "name2",
+          email: "222@xxx.xxx",
+          birthdate: "1900-xx-xx",
+        },
+        {
+          id: 3,
+          name: "name3",
+          email: "333@xxx.xxx",
+          birthdate: "1900-xx-xx",
+        },
+        {
+          id: 1,
+          name: "name1",
+          email: "111@xxx.xxx",
+          birthdate: "2000-xx-xx",
+        },
+        {
+          id: 2,
+          name: "name2",
+          email: "222@xxx.xxx",
+          birthdate: "1900-xx-xx",
+        },
+        {
+          id: 3,
+          name: "name3",
+          email: "333@xxx.xxx",
+          birthdate: "1900-xx-xx",
+        },
       ],
-      table: {
-        tableWrapper: "",
-        tableHeaderClass: "",
-        tableBodyClass: "",
-        tableClass: "bg-gray-200",
-        loadingClass: "",
-        ascendingIcon: "",
-        descendingIcon: "",
-        ascendingClass: "",
-        descendingClass: "",
-        sortableIcon: "",
-        handleIcon: "",
+      sort: {
+        order: "name",
+        sort: "asc",
+      },
+      messages: {
+        pagingInfo: "",
+        pageSizeChangeLabel: "",
+        gotoPageLabel: "",
+        noDataAvailable: "",
       },
     };
   },
@@ -70,4 +204,12 @@ export default {
 </script>
 
 <style>
+#film-table th {
+  /* background-color: rgba(243, 244, 246); */
+  /* border-radius: 5px; */
+  /* margin: 5px; */
+}
+#film-table .card-body {
+  border-radius: 10px;
+}
 </style>

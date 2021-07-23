@@ -42,10 +42,18 @@ class FilmController extends Controller
     public function create()
     {
         return Inertia::render('FilmAddEditView', [
-            'genres' => Genre::pluck('id', 'name')->toArray(),
-            'countries' => Country::pluck('id', 'name')->toArray(),
-            'creators'  => Creator::pluck('id', 'name')->toArray(),
-            'film_roles' => FilmRole::pluck('id', 'name')->toArray()
+            'genres' => Genre::all()->map(function ($genre) {
+                return ['id' => $genre->id, 'name' => $genre->name];
+            })->toArray(),
+            'countries' => Country::all()->map(function ($country) {
+                return ['id' => $country->id, 'name' => $country->name];
+            })->toArray(),
+            'creators'  => Creator::all()->map(function ($creator) {
+                return ['id' => $creator->id, 'name' => $creator->name];
+            })->toArray(),
+            'film_roles' => FilmRole::all()->map(function ($role) {
+                return ['id' => $role->id, 'name' => $role->name];
+            })->toArray()
         ]);
     }
 
@@ -64,13 +72,12 @@ class FilmController extends Controller
         } else {
             $film = Film::create($parametrs);
         }
-        $creator_ids = [];
+        $film->creators()->detach();
         foreach ($request->film['creators'] as $creator) {
-            $creator_ids []= $creator['id'];
-            $film_creator = Creator::find($creator['id']);
-            $film_creator->roles()->syncWithPivotValues($creator['roles'], ['film_id' => $film->id]);
+            foreach ($creator['roles'] as $role) {
+                $film->creators()->attach([$creator['id']], ['film_role_id' => $role]);
+            }
         }
-        $film->creators()->sync($creator_ids);
         $film->genres()->sync($request->film['genres']);
         $film->countries()->sync($request->film['countries']);
 
@@ -106,10 +113,18 @@ class FilmController extends Controller
     {
         return Inertia::render('FilmAddEditView', [
             'film' => $film->all,
-            'genres' => Genre::pluck('id', 'name')->toArray(),
-            'countries' => Country::pluck('id', 'name')->toArray(),
-            'creators'  => Creator::pluck('id', 'name')->toArray(),
-            'film_roles' => FilmRole::pluck('id', 'name')->toArray()
+            'genres' => Genre::all()->map(function ($genre) {
+                return ['id' => $genre->id, 'name' => $genre->name];
+            })->toArray(),
+            'countries' => Country::all()->map(function ($country) {
+                return ['id' => $country->id, 'name' => $country->name];
+            })->toArray(),
+            'creators'  => Creator::all()->map(function ($creator) {
+                return ['id' => $creator->id, 'name' => $creator->name];
+            })->toArray(),
+            'film_roles' => FilmRole::all()->map(function ($role) {
+                return ['id' => $role->id, 'name' => $role->name];
+            })->toArray()
         ]);
     }
 

@@ -42,7 +42,7 @@
           rounded
         "
       />
-      <button
+      <a
         class="
           col-start-11 col-end-12
           m-2
@@ -55,10 +55,11 @@
           delay-50
           hover:bg-white
         "
+        :href="route('login')"
       >
         Log in
-      </button>
-      <button
+      </a>
+      <a
         class="
           col-start-12
           m-2
@@ -71,9 +72,10 @@
           delay-50
           hover:bg-white
         "
+        :href="route('register')"
       >
         Sign Up
-      </button>
+      </a>
     </div>
   </div>
 </template>

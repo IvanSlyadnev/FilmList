@@ -10,7 +10,7 @@ class Film extends Model
     use HasFactory;
 
     protected $fillable = [
-        'name', 'year', 'budget ', 'description', 'rate', 'length', 'user_id', 'views'
+        'name', 'year', 'budget', 'description', 'rate', 'length', 'user_id', 'views'
     ];
 
     public function user () {
