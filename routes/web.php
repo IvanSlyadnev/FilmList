@@ -23,7 +23,7 @@ Route::get('/', function () {
 });
 
 Route::get('films', [FilmController::class, 'index'])->name('films.index');
-Route::get('films/{film}/show', [FilmController::class, 'show'])->name('film.show');
+Route::get('films/{film}/show', [FilmController::class, 'show'])->name('films.show');
 
 Route::group(['middleware' => ['auth']], function () {
     Route::post('films/{film}/comments', [CommentController::class, 'store'])->name('comment.store');
