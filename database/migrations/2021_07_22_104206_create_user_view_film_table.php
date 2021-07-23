@@ -16,9 +16,9 @@ class CreateUserViewFilmTable extends Migration
         Schema::create('user_view_film', function (Blueprint $table) {
             $table->id();
             $table->bigInteger('user_id')->unsigned();
-            $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->bigInteger('film_id')->unsigned();
-            $table->foreign('film_id')->references('id')->on('films');
+            $table->foreign('film_id')->references('id')->on('films')->onDelete('cascade');
             $table->timestamps();
         });
     }
