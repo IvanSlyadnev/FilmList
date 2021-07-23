@@ -76,7 +76,7 @@ class FilmController extends Controller
         $film->genres()->sync($request->film['genres']);
         $film->countries()->sync($request->film['countries']);
 
-        return redirect()->route('film.show', $film);
+        return redirect()->route('films.show', $film);
     }
 
     /**

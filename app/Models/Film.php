@@ -34,7 +34,7 @@ class Film extends Model
     }
 
     public function creators() {
-        return $this->belongsToMany(Creator::class, 'film_creator');
+        return $this->belongsToMany(Creator::class, 'film_creator')->distinct();
     }
 
     public function getAllAttribute()
