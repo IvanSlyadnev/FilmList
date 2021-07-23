@@ -41,7 +41,7 @@ class Film extends Model
     {
         $attributes = $this->getAttributes();
         $attributes['countries'] = $this->countries->map(function ($country) {
-            return $country->name;
+            return $country->id;
         })->toArray();
         $attributes['comments'] = $this->comments->map(function ($comment) {
             return ['name'=>$comment->pivot->name, 'user'=>User::find($comment->pivot->user_id)->name];
@@ -53,7 +53,7 @@ class Film extends Model
                 'country' => $actor->country->name,
                 'photo' => $actor->photo,
                 'roles' => $actor->roles()->where('film_id', $this->id)->get()->map(function ($role) {
-                    return $role->name;
+                    return $role->id;
                 })->toArray()
             ];
         })->toArray();
