@@ -58,7 +58,7 @@
             rounded-md
             py-2
           "
-          type="text"
+          type="number"
           v-model="fields.budget"
         />
       </div>
@@ -78,7 +78,7 @@
             rounded-md
             py-2
           "
-          type="text"
+          type="number"
           v-model="fields.length"
         />
       </div>
@@ -126,7 +126,7 @@
               border-radius: 0.375rem;
               border-color: rgba(229, 231, 235);
             "
-            v-model="fields.year"
+            v-model="rowDate"
             inputFormat="yyyy"
             minimumView="year"
           />
@@ -237,6 +237,7 @@
 import Layout from "./Layout";
 import Multiselect from "@vueform/multiselect";
 import Datepicker from "vue3-datepicker";
+import moment from "moment";
 import Axios from "axios";
 
 export default {
@@ -263,8 +264,7 @@ export default {
         creators: [],
         genres: [],
       },
-      value: null,
-      options: ["Batman", "Robin", "Joker"],
+      rowDate: "",
     };
   },
   methods: {
@@ -284,6 +284,11 @@ export default {
         .catch((error) => {
           alert("Произошла ошибка, попробуйте позже");
         });
+    },
+  },
+  watch: {
+    rowDate() {
+      this.fields.year = moment(this.rowDate).format("YYYY");
     },
   },
 };
