@@ -99,6 +99,20 @@
         />
       </div>
       <div class="m-2 flex">
+        <label class="text-md font-medium text-gray-500 m-2 w-1/5">Жанр </label>
+
+        <Multiselect
+          id="custom-multiselect"
+          class="w-4/5"
+          v-model="fields.genres"
+          :searchable="true"
+          mode="tags"
+          :options="genres"
+          valueProp="id"
+          label="name"
+        />
+      </div>
+      <div class="m-2 flex">
         <label class="text-md font-medium text-gray-500 m-2 w-1/5"
           >Год выпуска:
         </label>
@@ -226,7 +240,7 @@ import Datepicker from "vue3-datepicker";
 import Axios from "axios";
 
 export default {
-  props: ["countries", "creators", "film_roles"],
+  props: ["countries", "creators", "film_roles", "genres"],
   layout: Layout,
   components: {
     Multiselect,
@@ -247,6 +261,7 @@ export default {
         length: "",
         countries: [],
         creators: [],
+        genres: [],
       },
       value: null,
       options: ["Batman", "Robin", "Joker"],
