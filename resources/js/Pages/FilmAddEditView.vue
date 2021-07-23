@@ -241,7 +241,7 @@ import moment from "moment";
 import Axios from "axios";
 
 export default {
-  props: ["countries", "creators", "film_roles", "genres"],
+  props: ["countries", "creators", "film_roles", "genres", "film"],
   layout: Layout,
   components: {
     Multiselect,
@@ -253,17 +253,7 @@ export default {
         id: "",
         roles: [],
       },
-      fields: {
-        id: "new",
-        name: "",
-        year: "",
-        budget: "",
-        description: "",
-        length: "",
-        countries: [],
-        creators: [],
-        genres: [],
-      },
+      fields: {},
       rowDate: "",
     };
   },
@@ -290,6 +280,31 @@ export default {
     rowDate() {
       this.fields.year = moment(this.rowDate).format("YYYY");
     },
+  },
+  mounted() {
+    if (this.film == undefined) {
+      this.fields = Object.assign(
+        {},
+        {
+          id: "new",
+          name: "",
+          year: "",
+          budget: "",
+          description: "",
+          length: "",
+          countries: [],
+          creators: [],
+          genres: [],
+        }
+      );
+    } else {
+      this.fields = Object.assign({}, this.film);
+      this.rowDate = new Date(
+        "Sat Jan 01 " +
+          this.film.year +
+          " 00:00:00 GMT+0300 (Москва, стандартное время)"
+      );
+    }
   },
 };
 </script>
