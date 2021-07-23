@@ -8,7 +8,8 @@ use Illuminate\Http\Request;
 class MarkController extends Controller
 {
     public function setMark(Request $request, Film $film) {
-        $film->marks()->sync([$request->user()->id => ['value' => $request->mark]]);
+        $film->marks()->syncWithoutDetaching([$request->user()->id => ['value' => $request->mark]]);
+        $film->update(['rate'=> $film->count_rate]);
 
         return redirect()->route('films.show', $film);
     }
