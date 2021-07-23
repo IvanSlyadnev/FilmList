@@ -1,6 +1,6 @@
 <template>
   <div class="w-100 flex flex-col h-screen">
-    <header-top class="w-full" />
+    <header-top :user='user' class="w-full" />
     <div class="flex min-h-full">
       <navigation class="w-14" />
       <div class="w-full bg-gray-100 m-1 rounded">
@@ -14,6 +14,7 @@
 import HeaderTop from "./HeaderTop.vue";
 import Navigation from "./Navigation.vue";
 export default {
+  props: ['user'],
   components: {
     HeaderTop,
     Navigation,
