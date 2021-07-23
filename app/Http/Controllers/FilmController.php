@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Genre;
 use App\Models\User;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use App\Models\Film;
@@ -43,18 +44,10 @@ class FilmController extends Controller
     {
         $this->authorize('create', Film::class);
         return Inertia::render('FilmAddEditView', [
-            'genres' => Genre::all()->map(function ($genre) {
-                return ['id' => $genre->id, 'name' => $genre->name];
-            })->toArray(),
-            'countries' => Country::all()->map(function ($country) {
-                return ['id' => $country->id, 'name' => $country->name];
-            })->toArray(),
-            'creators'  => Creator::all()->map(function ($creator) {
-                return ['id' => $creator->id, 'name' => $creator->name];
-            })->toArray(),
-            'film_roles' => FilmRole::all()->map(function ($role) {
-                return ['id' => $role->id, 'name' => $role->name];
-            })->toArray()
+            'genres' => Genre::all()->mapAll(new Genre()),
+            'countries' => Country::all()->mapAll(new Country()),
+            'creators'  => Creator::all()->mapAll(new Creator()),
+            'film_roles' => FilmRole::all()->mapAll(new FilmRole()),
         ]);
     }
 
@@ -115,18 +108,10 @@ class FilmController extends Controller
     {
         return Inertia::render('FilmAddEditView', [
             'film' => $film->all,
-            'genres' => Genre::all()->map(function ($genre) {
-                return ['id' => $genre->id, 'name' => $genre->name];
-            })->toArray(),
-            'countries' => Country::all()->map(function ($country) {
-                return ['id' => $country->id, 'name' => $country->name];
-            })->toArray(),
-            'creators'  => Creator::all()->map(function ($creator) {
-                return ['id' => $creator->id, 'name' => $creator->name];
-            })->toArray(),
-            'film_roles' => FilmRole::all()->map(function ($role) {
-                return ['id' => $role->id, 'name' => $role->name];
-            })->toArray()
+            'genres' => Genre::all()->mapAll(new Genre()),
+            'countries' => Country::all()->mapAll(new Country()),
+            'creators'  => Creator::all()->mapAll(new Creator()),
+            'film_roles' => FilmRole::all()->mapAll(new FilmRole()),
         ]);
     }
 
