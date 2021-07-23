@@ -9,10 +9,9 @@ class CommentController extends Controller
 {
     public function store(Request $request, Film $film) {
         $film->comments()->attach([$request->user()->id =>
-            ['name' => $request->comment['name'], 'id' => $request->comment['id']]
+            ['name' => $request->comment['name'], 'id' => rand(0, 1000000)]
         ]);
-
-        return redirect()->route('film.show', $film);
+        return redirect()->route('films.show', $film);
     }
 
     public function destroy(Request $request, Film $film, $id) {
