@@ -92,8 +92,11 @@ class FilmController extends Controller
             $film->update(['views' => $film->views+1]);
         }
 
-        return Inertia::render('FilmShow', [
+        return Inertia::render('FilmShowView', [
             'film' => $film->all,
+            'comments' => $film->comments->map(function ($comment) {
+                return ['name'=>$comment->pivot->name, 'user'=>User::find($comment->pivot->user_id)->name];
+            })->toArray(),
             'can_edit' => $request->user() ? $request->user()->canEditFilm($film) : false
         ]);
     }
