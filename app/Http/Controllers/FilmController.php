@@ -72,13 +72,12 @@ class FilmController extends Controller
         } else {
             $film = Film::create($parametrs);
         }
-        $creator_ids = [];
+        $film->creators()->detach();
         foreach ($request->film['creators'] as $creator) {
-            $creator_ids []= $creator['id'];
-            $film_creator = Creator::find($creator['id']);
-            $film_creator->roles()->syncWithPivotValues($creator['roles'], ['film_id' => $film->id]);
+            foreach ($creator['roles'] as $role) {
+                $film->creators()->attach([$creator['id']], ['film_role_id' => $role]);
+            }
         }
-        $film->creators()->sync($creator_ids);
         $film->genres()->sync($request->film['genres']);
         $film->countries()->sync($request->film['countries']);
 
