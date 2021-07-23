@@ -44,10 +44,10 @@ class FilmController extends Controller
     {
         $this->authorize('create', Film::class);
         return Inertia::render('FilmAddEditView', [
-            'genres' => Genre::all()->mapAll(new Genre()),
-            'countries' => Country::all()->mapAll(new Country()),
-            'creators'  => Creator::all()->mapAll(new Creator()),
-            'film_roles' => FilmRole::all()->mapAll(new FilmRole()),
+            'genres' => Genre::mapAll(new Genre()),
+            'countries' => Country::mapAll(new Country()),
+            'creators'  => Creator::mapAll(new Creator()),
+            'film_roles' => FilmRole::mapAll(new FilmRole()),
         ]);
     }
 
@@ -108,10 +108,10 @@ class FilmController extends Controller
     {
         return Inertia::render('FilmAddEditView', [
             'film' => $film->all,
-            'genres' => Genre::all()->mapAll(new Genre()),
-            'countries' => Country::all()->mapAll(new Country()),
-            'creators'  => Creator::all()->mapAll(new Creator()),
-            'film_roles' => FilmRole::all()->mapAll(new FilmRole()),
+            'genres' => Genre::mapAll(new Genre()),
+            'countries' => Country::mapAll(new Country()),
+            'creators'  => Creator::mapAll(new Creator()),
+            'film_roles' => FilmRole::mapAll(new FilmRole()),
         ]);
     }
 
