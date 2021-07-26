@@ -17,7 +17,7 @@ class FilmController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Inertia\Response
      */
     public function index(Request $request)
     {
@@ -31,14 +31,14 @@ class FilmController extends Controller
                     'views' => $film['views']
                 ];
             }),
-            'roles' => $request->user() ? $request->user()->roles : ''
+            'can_edit' => $request->user() ? (($request->user()->isAdmin() || $request->user()->isFilmographer()) ?? false) : false
         ]);
     }
 
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Inertia\Response
      */
     public function create()
     {
@@ -85,7 +85,7 @@ class FilmController extends Controller
      * Display the specified resource.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Inertia\Response
      */
     public function show(Request $request,Film $film)
     {
@@ -104,7 +104,7 @@ class FilmController extends Controller
                     return $creator->name;
                 })->toArray()];
             })->toArray(),
-            'mark' => $request->user() ? $request->user()->marks()->where('film_id', 147)->first() ? $request->user()->marks()->where('film_id', $film->id)->first()->pivot->value : null : null,
+            'mark' => $request->user() ? $request->user()->marks()->where('film_id', $film->id)->first() ? $request->user()->marks()->where('film_id', $film->id)->first()->pivot->value : null : null,
             'genres' => Genre::mapAll($film->genres),
             'countries' => Genre::mapAll($film->countries),
             'can_edit' => $request->user() ? $request->user()->canEditFilm($film) : false
