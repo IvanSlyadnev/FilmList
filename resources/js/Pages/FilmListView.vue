@@ -74,6 +74,14 @@ export default {
           field: "views",
           sortable: true,
         },
+        {
+          label: "",
+          field: "quick",
+          width: "10%",
+          display: function (row) {
+            return "<a href='/films/" + row.id + "/show/' > Подробнее...</a>";
+          },
+        },
       ],
       data: [
         {

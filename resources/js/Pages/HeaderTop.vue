@@ -1,7 +1,17 @@
 <template>
   <div class="flex">
     <div
-      class="bg-gray-100 m-1 rounded w-14 h-14 flex items-center justify-center"
+      class="
+        bg-gray-100
+        m-1
+        rounded
+        w-14
+        h-14
+        flex
+        items-center
+        justify-center
+        shadow
+      "
     >
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -18,7 +28,9 @@
         </g>
       </svg>
     </div>
-    <div class="bg-gray-100 m-1 rounded w-full h-14 grid grid-cols-12 gap-4">
+    <div
+      class="bg-gray-100 m-1 rounded w-full h-14 grid grid-cols-12 gap-4 shadow"
+    >
       <a
         class="
           col-start-1 col-end-3

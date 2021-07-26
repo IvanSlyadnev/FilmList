@@ -1,7 +1,12 @@
 <template>
   <layout>
     <div class="m-3 w-3/6 ml-auto mr-auto">
-      <div class="text-2xl font-semibold mb-4">Добавление фильма</div>
+      <div v-if="film == undefined" class="text-2xl font-semibold mb-4">
+        Добавление фильма
+      </div>
+      <div v-else class="text-2xl font-semibold mb-4">
+        Редактирование фильма
+      </div>
       <div class="m-2 flex">
         <label class="text-md font-medium text-gray-500 m-2 w-1/5"
           >Название
