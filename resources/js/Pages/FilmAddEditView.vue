@@ -28,8 +28,14 @@
           "
           type="text"
           v-model="fields.name"
+          @input="localErrors['name'] = null"
         />
       </div>
+      <label
+        v-if="localErrors['name'] != null"
+        class="text-md font-medium text-red-300 m-2 ml-44 w-full"
+        >{{ localErrors["name"] }}
+      </label>
       <div class="m-2 flex">
         <label class="text-md font-medium text-gray-500 m-2 w-1/5"
           >Описание
@@ -68,8 +74,14 @@
           "
           type="number"
           v-model="fields.budget"
+          @input="localErrors['budget'] = null"
         />
       </div>
+      <label
+        v-if="localErrors['budget'] != null"
+        class="text-md font-medium text-red-300 m-2 ml-44 w-full"
+        >{{ localErrors["budget"] }}
+      </label>
       <div class="m-2 flex">
         <label class="text-md font-medium text-gray-500 m-2 w-1/5"
           >Длительность
@@ -88,8 +100,14 @@
           "
           type="number"
           v-model="fields.length"
+          @input="localErrors['length'] = null"
         />
       </div>
+      <label
+        v-if="localErrors['length'] != null"
+        class="text-md font-medium text-red-300 m-2 ml-44 w-full"
+        >{{ localErrors["length"] }}
+      </label>
       <div class="m-2 flex">
         <label class="text-md font-medium text-gray-500 m-2 w-1/5"
           >Страна
@@ -137,9 +155,15 @@
             v-model="rowDate"
             inputFormat="yyyy"
             minimumView="year"
+            @update:modelValue="localErrors['year'] = null"
           />
         </div>
       </div>
+      <label
+        v-if="localErrors['year'] != null"
+        class="text-md font-medium text-red-300 m-2 ml-44 w-full"
+        >{{ localErrors["year"] }}
+      </label>
       <div class="font-semibold ml-4">
         Создатели
         <div class="ml-2 mr-2">
@@ -248,6 +272,12 @@ import Datepicker from "vue3-datepicker";
 import moment from "moment";
 import _ from "lodash";
 import Axios from "axios";
+let defaultErrorsArray = {
+  budget: null,
+  length: null,
+  name: null,
+  year: null,
+};
 
 export default {
   props: ["countries", "creators", "film_roles", "genres", "film"],
@@ -265,6 +295,7 @@ export default {
       fields: {},
       rowDate: "",
       isLoading: false,
+      localErrors: Object.assign({}, defaultErrorsArray),
     };
   },
   methods: {
@@ -276,6 +307,7 @@ export default {
     },
     saveButtonHandler() {
       this.isLoading = true;
+      this.localErrors = Object.assign({}, defaultErrorsArray);
       Axios.post(route("films.store"), {
         film: this.fields,
       })
@@ -284,8 +316,10 @@ export default {
           window.location.replace(route("films.show", response.data.id));
         })
         .catch((error) => {
+          Object.keys(error.response.data.errors).forEach((name) => {
+            this.localErrors[name] = error.response.data.errors[name][0];
+          });
           this.isLoading = false;
-          alert("Произошла ошибка, попробуйте позже");
         });
     },
   },
