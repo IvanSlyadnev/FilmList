@@ -64,7 +64,7 @@ class User extends Authenticatable
     }
 
     public function comments() {
-        return $this->belongsToMany(User::class, 'comments')->withPivot('name');
+        return $this->belongsToMany(User::class, 'comments')->withPivot('name', 'id');
     }
 
     public function roles() {
@@ -85,5 +85,9 @@ class User extends Authenticatable
 
     public function views() {
         return $this->belongsToMany(Film::class, 'user_view_film');
+    }
+
+    public function marks() {
+        return $this->belongsToMany(Film::class, 'marks')->withPivot('value');
     }
 }

@@ -11,6 +11,6 @@ class MarkController extends Controller
         $film->marks()->syncWithoutDetaching([$request->user()->id => ['value' => $request->mark]]);
         $film->update(['rate'=> $film->count_rate]);
 
-        return redirect()->route('films.show', $film);
+        return response(['id' => $film->id]);
     }
 }

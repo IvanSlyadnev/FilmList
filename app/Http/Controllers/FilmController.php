@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\FilmRequest;
 use App\Models\Genre;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
@@ -17,7 +18,7 @@ class FilmController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Inertia\Response
      */
     public function index(Request $request)
     {
@@ -31,14 +32,14 @@ class FilmController extends Controller
                     'views' => $film['views']
                 ];
             }),
-            'roles' => $request->user() ? $request->user()->roles : ''
+            'can_edit' => $request->user() ? (($request->user()->isAdmin() || $request->user()->isFilmographer()) ?? false) : false
         ]);
     }
 
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Inertia\Response
      */
     public function create()
     {
@@ -57,7 +58,7 @@ class FilmController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(FilmRequest $request)
     {
         $this->authorize('create', Film::class);
         $parametrs = collect($request->film)->only((new Film())->getFillable())->toArray();
@@ -76,14 +77,14 @@ class FilmController extends Controller
         $film->genres()->sync($request->film['genres']);
         $film->countries()->sync($request->film['countries']);
 
-        return redirect()->route('films.show', $film);
+        return response(['id' => $film->id]);
     }
 
     /**
      * Display the specified resource.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Inertia\Response
      */
     public function show(Request $request,Film $film)
     {
@@ -95,16 +96,18 @@ class FilmController extends Controller
         return Inertia::render('FilmShowView', [
             'film' => $film->getAttributes(),
             'comments' => $film->comments->map(function ($comment) {
-                return ['name'=>$comment->pivot->name, 'user'=>User::find($comment->pivot->user_id)->name];
+                return ['id' => $comment->pivot->id, 'name'=>$comment->pivot->name, 'user'=>User::find($comment->pivot->user_id)->name];
             })->toArray(),
             'creators' => $film->roles->map(function ($role) use($film) {
                 return ['name' => $role->name, 'creators' => $role->creators()->wherePivot('film_id', $film->id)->get()->map(function ($creator) {
                     return $creator->name;
                 })->toArray()];
             })->toArray(),
+            'mark' => $request->user() ? $request->user()->marks()->where('film_id', $film->id)->first() ? $request->user()->marks()->where('film_id', $film->id)->first()->pivot->value : null : null,
             'genres' => Genre::mapAll($film->genres),
             'countries' => Genre::mapAll($film->countries),
-            'can_edit' => $request->user() ? $request->user()->canEditFilm($film) : false
+            'can_edit' => $request->user() ? $request->user()->canEditFilm($film) : false,
+            'is_admin' => $request->user()->isAdmin()
         ]);
     }
 
@@ -116,6 +119,7 @@ class FilmController extends Controller
      */
     public function edit(Film $film)
     {
+        $this->authorize('update', $film);
         return Inertia::render('FilmAddEditView', [
             'film' => $film->all,
             'genres' => Genre::mapAll(Genre::all()),
@@ -147,5 +151,6 @@ class FilmController extends Controller
     {
         $this->authorize('delete', $film);
         $film->delete();
+        //return redirect()->route('films.index');
     }
 }

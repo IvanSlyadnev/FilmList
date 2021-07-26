@@ -3,7 +3,7 @@
     <header-top :user='user' class="w-full" />
     <div class="flex min-h-full">
       <navigation class="w-14" />
-      <div class="w-full bg-gray-100 m-1 rounded">
+      <div class="w-full bg-gray-100 shadow m-1 rounded">
         <slot />
       </div>
     </div>
