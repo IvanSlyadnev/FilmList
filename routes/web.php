@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CountryController;
 use App\Http\Controllers\CreatorController;
 use App\Http\Controllers\MarkController;
 use Illuminate\Foundation\Application;
@@ -31,6 +32,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::resource('films', FilmController::class)->except('index', 'show', 'update');
     Route::resource('creators', CreatorController::class);
     Route::post('films/{film}/mark', [MarkController::class, 'setMark'])->name('film.mark');
+    Route::resource('countries', CountryController::class);
 });
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
