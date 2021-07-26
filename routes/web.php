@@ -28,7 +28,7 @@ Route::get('films/{film}/show', [FilmController::class, 'show'])->name('films.sh
 
 Route::group(['middleware' => ['auth']], function () {
     Route::post('films/{film}/comments', [CommentController::class, 'store'])->name('comment.store');
-    Route::delete('comments/{film}/{comment}', [CommentController::class, 'destroy'])->name('comment.delete');
+    Route::delete('comments/{film}/{comment}', [CommentController::class, 'destroy'])->name('comment.destroy');
     Route::resource('films', FilmController::class)->except('index', 'show', 'update');
     Route::resource('creators', CreatorController::class);
     Route::post('films/{film}/mark', [MarkController::class, 'setMark'])->name('film.mark');

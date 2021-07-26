@@ -11,6 +11,7 @@ class CountryController extends Controller
 {
     public function index()
     {
+        $this->authorize('viewAny', Country::class);
         return Inertia::render('CountryListView', [
             'countries' => Country::all()->map(function ($country) {
                 return [
@@ -23,11 +24,13 @@ class CountryController extends Controller
 
     public function create()
     {
+        $this->authorize('create', Country::class);
         return Inertia::render('CountryAdd');
     }
 
     public function store(Request $request)
     {
+        $this->authorize('create', Country::class);
         $params = collect($request->country)->only((new Country())->getFillable())->toArray();
         if ($country = Country::find($request->country['id'])) {
             $country->update($params);
@@ -40,6 +43,7 @@ class CountryController extends Controller
 
     public function show(Country $country)
     {
+        $this->authorize('view', $country);
         return Inertia::render('CountryShowView', [
             'country' => collect($country)->only((new Country())->getFillable())->toArray()
         ]);
@@ -47,6 +51,7 @@ class CountryController extends Controller
 
     public function edit(Country $country)
     {
+        $this->authorize('update', $country);
         return Inertia::render('CountryAddView', [
             'country' => collect($country)->only((new Country())->getFillable())->toArray()
         ]);
@@ -54,6 +59,7 @@ class CountryController extends Controller
 
     public function destroy(Country $country)
     {
+        $this->authorize('delete', $country);
         $country->delete();
     }
 }
