@@ -65,7 +65,7 @@
           ></star-rating>
         </div>
 
-        <div class="w-4/6">
+        <div class="pl-2 w-4/6">
           <div class="m-2 flex">
             <label class="text-md font-medium text-gray-500 m-2 w-1/5"
               >Название
@@ -204,7 +204,7 @@
             :key="commentKey"
             class="m-2 flex rounded"
           >
-            <label class="text-md font-medium text-gray-500 m-2 w-1/5">
+            <label class="text-md font-medium text-gray-500 m-2 w-3/12">
               {{ comment.user }}
             </label>
             <label
@@ -214,9 +214,31 @@
                 border border-gray-200
                 rounded-md
                 p-2
+                w-8/12
               "
+              :class="{ 'w-8/12': is_admin, 'w-9/12': !is_admin }"
               >{{ comment.name }}</label
             >
+            <button
+              class="text-md font-medium text-gray-500 flex items-center"
+              @click="deleteCommentHandler(comment.id)"
+              v-if="is_admin"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="h-6 w-6"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"
+                />
+              </svg>
+            </button>
           </div>
 
           <div class="m-2 flex rounded">
@@ -258,7 +280,15 @@ import Axios from "axios";
 import StarRating from "vue-star-rating";
 
 export default {
-  props: ["film", "comments", "creators", "genres", "can_edit", "mark"],
+  props: [
+    "film",
+    "comments",
+    "creators",
+    "genres",
+    "can_edit",
+    "is_admin",
+    "mark",
+  ],
   layout: Layout,
   components: {
     StarRating,
@@ -300,6 +330,19 @@ export default {
             alert("Удаление не удалось");
           });
       }
+    },
+    deleteCommentHandler(commentID) {
+      this.isLoading = true;
+      Axios.delete(
+        route("comment.delete", { film: this.film.id, comment: commentID })
+      )
+        .then(() => {
+          this.isLoading = false;
+          window.location.reload();
+        })
+        .catch(() => {
+          alert("Произошла ошибка");
+        });
     },
     setRatingHandler(rating) {
       Axios.post(route("film.mark", this.film.id), {
