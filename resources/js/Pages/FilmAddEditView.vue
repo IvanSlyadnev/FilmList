@@ -280,7 +280,7 @@ export default {
       })
         .then((response) => {
           this.isLoading = false;
-          window.location.replace("/");
+          window.location.replace(route("films.show", response.data.id));
         })
         .catch((error) => {
           this.isLoading = false;

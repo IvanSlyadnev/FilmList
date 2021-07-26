@@ -4,7 +4,7 @@
       :class="{ isLoadingClass: isLoading }"
       class="m-3 w-3/6 ml-auto mr-auto"
     >
-      <div class="flex justify-between">
+      <div class="flex justify-between mb-4">
         <div class="text-2xl font-semibold mb-4">Описание фильма</div>
         <div class="flex">
           <a
@@ -23,7 +23,7 @@
               delay-50
               hover:border-gray-200
             "
-            :href="'/films/' + film.id + '/edit/'"
+            :href="route('films.edit', film.id)"
             >Редактировать фильм</a
           >
           <button
@@ -50,141 +50,201 @@
           </button>
         </div>
       </div>
-      <div class="m-2 flex">
-        <label class="text-md font-medium text-gray-500 m-2 w-1/5"
-          >Название
-        </label>
-        <label
-          class="w-4/5 text-sm text-black border border-gray-200 rounded-md p-2"
-          >{{ film.name }}</label
-        >
-      </div>
-      <div class="m-2 flex">
-        <label class="text-md font-medium text-gray-500 m-2 w-1/5"
-          >Описание
-        </label>
-        <label
-          class="w-4/5 text-sm text-black border border-gray-200 rounded-md p-2"
-          >{{ film.description }}</label
-        >
-      </div>
-      <div class="m-2 flex rounded">
-        <label class="text-md font-medium text-gray-500 m-2 w-1/5"
-          >Бюджет
-        </label>
-        <label
-          class="w-4/5 text-sm text-black border border-gray-200 rounded-md p-2"
-          >{{ film.budget }}</label
-        >
-      </div>
-
-      <div class="m-2 flex rounded">
-        <label class="text-md font-medium text-gray-500 m-2 w-1/5"
-          >Длительность
-        </label>
-        <label
-          class="w-4/5 text-sm text-black border border-gray-200 rounded-md p-2"
-          >{{ film.length }}</label
-        >
-      </div>
-
-      <div class="m-2 flex rounded">
-        <label class="text-md font-medium text-gray-500 m-2 w-1/5">
-          Год выпуска
-        </label>
-        <label
-          class="w-4/5 text-sm text-black border border-gray-200 rounded-md p-2"
-          >{{ film.year }}</label
-        >
-      </div>
-
-      <div class="m-2 flex rounded">
-        <label class="text-md font-medium text-gray-500 m-2 w-1/5">
-          Жанры:
-        </label>
-        <div v-for="(genre, genreKey) in genres" :key="genreKey" class="py-2">
-          <label
-            class="
-              mr-2
-              text-sm text-black
-              border border-gray-200
-              rounded-md
-              p-2
-            "
-            >{{ genre.name }}</label
-          >
+      <div class="flex flex-wrap">
+        <div class="w-2/6">
+          <img
+            src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/No-Image-Placeholder.svg/488px-No-Image-Placeholder.svg.png"
+            alt=""
+          />
+          <star-rating
+            @update:rating="setRatingHandler"
+            v-model:rating="rate"
+            class="mt-2"
+            :star-size="40"
+            :increment="0.5"
+          ></star-rating>
         </div>
-      </div>
 
-      <div
-        v-for="(creatorType, typeKey) in creators"
-        :key="typeKey"
-        class="m-2 flex rounded"
-      >
-        <label class="text-md font-medium text-gray-500 m-2 w-1/5">
-          {{ creatorType.name }}
-        </label>
-        <div
-          v-for="(creatorName, nameKey) in creatorType.creators"
-          :key="nameKey"
-          class="py-2"
-        >
-          <label
-            class="
-              mr-2
-              text-sm text-black
-              border border-gray-200
-              rounded-md
-              p-2
-            "
-            >{{ creatorName }}</label
+        <div class="w-4/6">
+          <div class="m-2 flex">
+            <label class="text-md font-medium text-gray-500 m-2 w-1/5"
+              >Название
+            </label>
+            <label
+              class="
+                w-4/5
+                text-sm text-black
+                border border-gray-200
+                rounded-md
+                p-2
+              "
+              >{{ film.name }}</label
+            >
+          </div>
+          <div class="m-2 flex">
+            <label class="text-md font-medium text-gray-500 m-2 w-1/5"
+              >Описание
+            </label>
+            <label
+              class="
+                w-4/5
+                text-sm text-black
+                border border-gray-200
+                rounded-md
+                p-2
+              "
+              >{{ film.description }}</label
+            >
+          </div>
+          <div class="m-2 flex rounded">
+            <label class="text-md font-medium text-gray-500 m-2 w-1/5"
+              >Бюджет
+            </label>
+            <label
+              class="
+                w-4/5
+                text-sm text-black
+                border border-gray-200
+                rounded-md
+                p-2
+              "
+              >{{ film.budget }}</label
+            >
+          </div>
+
+          <div class="m-2 flex rounded">
+            <label class="text-md font-medium text-gray-500 m-2 w-1/5"
+              >Время
+            </label>
+            <label
+              class="
+                w-4/5
+                text-sm text-black
+                border border-gray-200
+                rounded-md
+                p-2
+              "
+              >{{ film.length }}</label
+            >
+          </div>
+
+          <div class="m-2 flex rounded">
+            <label class="text-md font-medium text-gray-500 m-2 w-1/5">
+              Год выпуска
+            </label>
+            <label
+              class="
+                w-4/5
+                text-sm text-black
+                border border-gray-200
+                rounded-md
+                p-2
+              "
+              >{{ film.year }}</label
+            >
+          </div>
+
+          <div class="m-2 flex rounded">
+            <label class="text-md font-medium text-gray-500 m-2 w-1/5">
+              Жанры:
+            </label>
+            <div
+              v-for="(genre, genreKey) in genres"
+              :key="genreKey"
+              class="py-2"
+            >
+              <label
+                class="
+                  mr-2
+                  text-sm text-black
+                  border border-gray-200
+                  rounded-md
+                  p-2
+                "
+                >{{ genre.name }}</label
+              >
+            </div>
+          </div>
+
+          <div
+            v-for="(creatorType, typeKey) in creators"
+            :key="typeKey"
+            class="m-2 flex rounded"
           >
+            <label class="text-md font-medium text-gray-500 m-2 w-1/5">
+              {{ creatorType.name }}
+            </label>
+            <div
+              v-for="(creatorName, nameKey) in creatorType.creators"
+              :key="nameKey"
+              class="py-2"
+            >
+              <label
+                class="
+                  mr-2
+                  text-sm text-black
+                  border border-gray-200
+                  rounded-md
+                  p-2
+                "
+                >{{ creatorName }}</label
+              >
+            </div>
+          </div>
         </div>
-      </div>
+        <div class="w-full">
+          <div class="m-2 flex rounded">
+            <label class="text-md font-medium text-xl font-semibold m-2 w-1/5">
+              Комментарии:
+            </label>
+          </div>
 
-      <div class="m-2 flex rounded">
-        <label class="text-md font-medium text-xl font-semibold m-2 w-1/5">
-          Комментарии:
-        </label>
-      </div>
+          <div
+            v-for="(comment, commentKey) in comments"
+            :key="commentKey"
+            class="m-2 flex rounded"
+          >
+            <label class="text-md font-medium text-gray-500 m-2 w-1/5">
+              {{ comment.user }}
+            </label>
+            <label
+              class="
+                mr-2
+                text-sm text-black
+                border border-gray-200
+                rounded-md
+                p-2
+              "
+              >{{ comment.name }}</label
+            >
+          </div>
 
-      <div
-        v-for="(comment, commentKey) in comments"
-        :key="commentKey"
-        class="m-2 flex rounded"
-      >
-        <label class="text-md font-medium text-gray-500 m-2 w-1/5">
-          {{ comment.user }}
-        </label>
-        <label
-          class="mr-2 text-sm text-black border border-gray-200 rounded-md p-2"
-          >{{ comment.name }}</label
-        >
-      </div>
-
-      <div class="m-2 flex rounded">
-        <label class="text-md font-medium text-xl font-semibold m-2 w-full">
-          Оставить комментарий
-        </label>
-      </div>
-      <div class="m-2 flex flex-wrap">
-        <textarea
-          v-model="commentValue"
-          type="text"
-          class="
-            w-full
-            text-sm text-black
-            border border-gray-200
-            rounded-md
-            py-2
-          "
-        />
-        <button
-          @click="addCommentButton"
-          class="mr-0 ml-auto bg-white m-2 rounded py-2 px-4"
-        >
-          Отправить
-        </button>
+          <div class="m-2 flex rounded">
+            <label class="text-md font-medium text-xl font-semibold m-2 w-full">
+              Оставить комментарий
+            </label>
+          </div>
+          <div class="m-2 flex flex-wrap">
+            <textarea
+              v-model="commentValue"
+              type="text"
+              class="
+                w-full
+                text-sm text-black
+                border border-gray-200
+                rounded-md
+                py-2
+              "
+            />
+            <button
+              :class="{ isLoadingClass: commentValue.length == 0 }"
+              @click="addCommentButton"
+              class="mr-0 ml-auto bg-white m-2 rounded py-2 px-4"
+            >
+              Отправить
+            </button>
+          </div>
+        </div>
       </div>
     </div>
   </layout>
@@ -195,15 +255,20 @@
 <script>
 import Layout from "./Layout";
 import Axios from "axios";
+import StarRating from "vue-star-rating";
 
 export default {
   props: ["film", "comments", "creators", "genres", "can_edit"],
   layout: Layout,
+  components: {
+    StarRating,
+  },
   data() {
     return {
       inputComments: [],
       commentValue: "",
       isLoading: false,
+      rate: 0,
     };
   },
   methods: {
@@ -215,12 +280,11 @@ export default {
       })
         .then((response) => {
           this.isLoading = false;
-          window.location.replace("/films/" + film.id + "/show");
+          window.location.reload();
         })
         .catch((error) => {
           this.isLoading = false;
           alert("Произошла ошибка, попробуйте позже");
-          window.location.replace("/films/" + film.id + "/show");
         });
     },
     deleteHandler() {
@@ -233,6 +297,11 @@ export default {
         .catch(() => {
           this.isLoading = false;
         });
+    },
+    setRatingHandler(rating) {
+      Axios.post(route("film.mark", this.film.id), {
+        mark: rating,
+      });
     },
   },
   mounted() {
