@@ -12,11 +12,16 @@ class Country extends Model
     use Maping;
 
     protected $fillable = [
-        'id', 'name', 'flag'
+        'name', 'flag'
     ];
 
     public function films() {
         return $this->belongsToMany(Film::class, 'film_country');
     }
+
+    public function creators() {
+        return $this->hasMany(Creator::class);
+    }
+
 
 }

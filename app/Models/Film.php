@@ -43,7 +43,7 @@ class Film extends Model
 
     public function getAllAttribute()
     {
-        $attributes = $this->getAttributes();
+        $attributes = collect($this->getAttributes())->only((new Film())->getFillable())->toArray();
         $attributes['countries'] = $this->countries->map(function ($country) {
             return $country->id;
         })->toArray();

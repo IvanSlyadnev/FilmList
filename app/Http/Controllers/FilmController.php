@@ -119,6 +119,7 @@ class FilmController extends Controller
      */
     public function edit(Film $film)
     {
+        $this->authorize('update', $film);
         return Inertia::render('FilmAddEditView', [
             'film' => $film->all,
             'genres' => Genre::mapAll(Genre::all()),
