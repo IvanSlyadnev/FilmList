@@ -5,6 +5,7 @@
         Список фильмов
       </div>
       <a
+        v-if="can_edit"
         class="
           col-start-11 col-span-2
           p-2
@@ -42,7 +43,7 @@
 import Layout from "./Layout";
 import VueTableLite from "vue3-table-lite";
 export default {
-  props: ["films"],
+  props: ["films", "can_edit"],
   components: {
     VueTableLite,
   },

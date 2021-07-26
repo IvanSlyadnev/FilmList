@@ -289,14 +289,17 @@ export default {
     },
     deleteHandler() {
       this.isLoading = true;
-      Axios.delete(route("films.destroy", this.film.id))
-        .then(() => {
-          this.isLoading = false;
-          window.location.replace("/");
-        })
-        .catch(() => {
-          this.isLoading = false;
-        });
+      if (confirm("Вы уверены?")) {
+        Axios.delete(route("films.destroy", this.film.id))
+          .then(() => {
+            this.isLoading = false;
+            window.location.replace("/");
+          })
+          .catch(() => {
+            this.isLoading = false;
+            alert("Удаление не удалось");
+          });
+      }
     },
     setRatingHandler(rating) {
       Axios.post(route("film.mark", this.film.id), {
