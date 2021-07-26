@@ -258,7 +258,7 @@ import Axios from "axios";
 import StarRating from "vue-star-rating";
 
 export default {
-  props: ["film", "comments", "creators", "genres", "can_edit"],
+  props: ["film", "comments", "creators", "genres", "can_edit", "mark"],
   layout: Layout,
   components: {
     StarRating,
@@ -306,6 +306,7 @@ export default {
   },
   mounted() {
     this.inputComments = [...this.comments];
+    this.rate = this.mark;
   },
 };
 </script>
