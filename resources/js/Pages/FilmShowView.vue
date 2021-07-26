@@ -334,7 +334,7 @@ export default {
     deleteCommentHandler(commentID) {
       this.isLoading = true;
       Axios.delete(
-        route("comment.delete", { film: this.film.id, comment: commentID })
+        route("comment.destroy", { film: this.film.id, comment: commentID })
       )
         .then(() => {
           this.isLoading = false;
