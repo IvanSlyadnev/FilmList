@@ -59,7 +59,7 @@ class FilmController extends Controller
      */
     public function store(Request $request)
     {
-        $this->authorize('cr    eate', Film::class);
+        $this->authorize('create', Film::class);
         $parametrs = collect($request->film)->only((new Film())->getFillable())->toArray();
         $parametrs['user_id'] = $request->user()->id;
         if ($film = Film::find($request->film['id'])) {
