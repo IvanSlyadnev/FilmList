@@ -106,7 +106,8 @@ class FilmController extends Controller
             'mark' => $request->user() ? $request->user()->marks()->where('film_id', $film->id)->first() ? $request->user()->marks()->where('film_id', $film->id)->first()->pivot->value : null : null,
             'genres' => Genre::mapAll($film->genres),
             'countries' => Genre::mapAll($film->countries),
-            'can_edit' => $request->user() ? $request->user()->canEditFilm($film) : false
+            'can_edit' => $request->user() ? $request->user()->canEditFilm($film) : false,
+            'is_admin' => $request->user()->isAdmin()
         ]);
     }
 
