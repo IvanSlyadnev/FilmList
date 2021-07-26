@@ -76,7 +76,8 @@ class FilmController extends Controller
         $film->genres()->sync($request->film['genres']);
         $film->countries()->sync($request->film['countries']);
 
-        return redirect()->route('films.show', $film);
+        return response(['id' => $film->id]);
+        //return redirect()->route('films.show', $film->id);
     }
 
     /**
@@ -102,6 +103,7 @@ class FilmController extends Controller
                     return $creator->name;
                 })->toArray()];
             })->toArray(),
+            'mark' => $request->user()->marks()->where('film_id', 147)->first() ? $request->user()->marks()->where('film_id', $film->id)->first()->pivot->value : null,
             'genres' => Genre::mapAll($film->genres),
             'countries' => Genre::mapAll($film->countries),
             'can_edit' => $request->user() ? $request->user()->canEditFilm($film) : false
@@ -147,5 +149,6 @@ class FilmController extends Controller
     {
         $this->authorize('delete', $film);
         $film->delete();
+        //return redirect()->route('films.index');
     }
 }

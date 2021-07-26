@@ -86,4 +86,8 @@ class User extends Authenticatable
     public function views() {
         return $this->belongsToMany(Film::class, 'user_view_film');
     }
+
+    public function marks() {
+        return $this->belongsToMany(Film::class, 'marks')->withPivot('value');
+    }
 }
