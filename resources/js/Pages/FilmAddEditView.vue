@@ -166,7 +166,7 @@
               style="margin: 8px"
               v-model="creator.id"
               :searchable="true"
-              :options="creators"
+              :options="filtredCreators"
               valueProp="id"
               label="name"
             />
@@ -246,6 +246,7 @@ import Layout from "./Layout";
 import Multiselect from "@vueform/multiselect";
 import Datepicker from "vue3-datepicker";
 import moment from "moment";
+import _ from "lodash";
 import Axios from "axios";
 
 export default {
@@ -291,6 +292,24 @@ export default {
   watch: {
     rowDate() {
       this.fields.year = moment(this.rowDate).format("YYYY");
+    },
+  },
+  computed: {
+    filtredCreators() {
+      let computedCreators = _.cloneDeep(this.creators);
+      computedCreators.map((item) => {
+        if (
+          this.fields.creators.filter((itemTwo) => {
+            return itemTwo.id == item.id;
+          }).length == 0
+        ) {
+          return item;
+        } else {
+          item["disabled"] = true;
+          return item;
+        }
+      });
+      return computedCreators;
     },
   },
   mounted() {
