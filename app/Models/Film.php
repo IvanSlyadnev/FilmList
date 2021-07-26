@@ -26,7 +26,7 @@ class Film extends Model
     }
 
     public function comments() {
-        return $this->belongsToMany(User::class, 'comments')->withPivot('name');
+        return $this->belongsToMany(User::class, 'comments')->withPivot('name' ,'id');
     }
 
     public function countries() {

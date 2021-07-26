@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\FilmRequest;
 use App\Models\Genre;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
@@ -57,7 +58,7 @@ class FilmController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(FilmRequest $request)
     {
         $this->authorize('create', Film::class);
         $parametrs = collect($request->film)->only((new Film())->getFillable())->toArray();
@@ -77,8 +78,6 @@ class FilmController extends Controller
         $film->countries()->sync($request->film['countries']);
 
         return response(['id' => $film->id]);
-
-        //return redirect()->route('films.show', $film->id);
     }
 
     /**
@@ -97,7 +96,7 @@ class FilmController extends Controller
         return Inertia::render('FilmShowView', [
             'film' => $film->getAttributes(),
             'comments' => $film->comments->map(function ($comment) {
-                return ['id' => $comment->id, 'name'=>$comment->pivot->name, 'user'=>User::find($comment->pivot->user_id)->name];
+                return ['id' => $comment->pivot->id, 'name'=>$comment->pivot->name, 'user'=>User::find($comment->pivot->user_id)->name];
             })->toArray(),
             'creators' => $film->roles->map(function ($role) use($film) {
                 return ['name' => $role->name, 'creators' => $role->creators()->wherePivot('film_id', $film->id)->get()->map(function ($creator) {
@@ -107,7 +106,8 @@ class FilmController extends Controller
             'mark' => $request->user() ? $request->user()->marks()->where('film_id', $film->id)->first() ? $request->user()->marks()->where('film_id', $film->id)->first()->pivot->value : null : null,
             'genres' => Genre::mapAll($film->genres),
             'countries' => Genre::mapAll($film->countries),
-            'can_edit' => $request->user() ? $request->user()->canEditFilm($film) : false
+            'can_edit' => $request->user() ? $request->user()->canEditFilm($film) : false,
+            'is_admin' => $request->user()->isAdmin()
         ]);
     }
 
