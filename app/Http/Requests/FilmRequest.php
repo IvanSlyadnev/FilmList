@@ -24,7 +24,6 @@ class FilmRequest extends FormRequest
     public function rules()
     {
         return [
-            'id' => 'required',
             'name' => 'required',
             'year' => 'required',
             'budget' => 'required',
@@ -33,6 +32,15 @@ class FilmRequest extends FormRequest
             'creators' => 'array',
             'creators.*.roles' => 'array',
             'genres' => 'array'
+        ];
+    }
+
+    public function messages() {
+        return [
+            'name.required' => 'Введите имя',
+            'year.required' => 'Введите год',
+            'budget.required' => 'Введите бюджет',
+            'length.required' => 'Введите время фильма'
         ];
     }
 }
