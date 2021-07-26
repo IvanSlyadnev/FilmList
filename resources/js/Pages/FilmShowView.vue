@@ -1,6 +1,9 @@
 <template>
   <layout>
-    <div class="m-3 w-3/6 ml-auto mr-auto">
+    <div
+      :class="{ isLoadingClass: isLoading }"
+      class="m-3 w-3/6 ml-auto mr-auto"
+    >
       <div class="flex justify-between">
         <div class="text-2xl font-semibold mb-4">Описание фильма</div>
         <div class="flex">
@@ -200,22 +203,36 @@ export default {
     return {
       inputComments: [],
       commentValue: "",
+      isLoading: false,
     };
   },
   methods: {
     addCommentButton() {
+      this.isLoading = true;
+
       Axios.post(route("comment.store", this.film.id), {
         comment: { name: this.commentValue },
       })
         .then((response) => {
-          console.log("успешно");
+          this.isLoading = false;
+          window.location.replace("/films/" + film.id + "/show");
         })
         .catch((error) => {
+          this.isLoading = false;
           alert("Произошла ошибка, попробуйте позже");
+          window.location.replace("/films/" + film.id + "/show");
         });
     },
     deleteHandler() {
-      Axios.delete(route("films.destroy", this.film.id));
+      this.isLoading = true;
+      Axios.delete(route("films.destroy", this.film.id))
+        .then(() => {
+          this.isLoading = false;
+          window.location.replace("/");
+        })
+        .catch(() => {
+          this.isLoading = false;
+        });
     },
   },
   mounted() {
@@ -225,4 +242,8 @@ export default {
 </script>
 
 <style>
+.isLoadingClass {
+  opacity: 0.5;
+  pointer-events: none;
+}
 </style>
