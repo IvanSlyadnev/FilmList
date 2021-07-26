@@ -1,6 +1,9 @@
 <template>
   <layout>
-    <div class="m-3 w-3/6 ml-auto mr-auto">
+    <div
+      :class="{ isLoadingClass: isLoading }"
+      class="m-3 w-3/6 ml-auto mr-auto"
+    >
       <div v-if="film == undefined" class="text-2xl font-semibold mb-4">
         Добавление фильма
       </div>
@@ -260,6 +263,7 @@ export default {
       },
       fields: {},
       rowDate: "",
+      isLoading: false,
     };
   },
   methods: {
@@ -270,13 +274,16 @@ export default {
       this.fields.creators.splice(key, 1);
     },
     saveButtonHandler() {
+      this.isLoading = true;
       Axios.post(route("films.store"), {
         film: this.fields,
       })
         .then((response) => {
-          console.log("успешно");
+          this.isLoading = false;
+          window.location.replace("/");
         })
         .catch((error) => {
+          this.isLoading = false;
           alert("Произошла ошибка, попробуйте позже");
         });
     },
@@ -329,6 +336,10 @@ export default {
         var(--ms-ring-color, rgba(36, 100, 235, 0.5));
     }
   }
+}
+.isLoadingClass {
+  opacity: 0.5;
+  pointer-events: none;
 }
 #custom-datepicker {
   &input {
