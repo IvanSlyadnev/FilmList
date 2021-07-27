@@ -63,12 +63,13 @@ class FilmController extends Controller
         $this->authorize('create', Film::class);
         $parametrs = collect($request->film)->only((new Film())->getFillable())->toArray();
         $parametrs['user_id'] = $request->user()->id;
-        /*if ($film = Film::find($request->film['id'])) {
+        if ($film = Film::find($request->film['id'])) {
             $film->update($parametrs);
         } else {
+            return response($parametrs);
             $film = Film::create($parametrs);
         }
-        $film->creators()->detach();
+        /*$film->creators()->detach();
         foreach ($request->film['creators'] as $creator) {
             foreach ($creator['roles'] as $role) {
                 $film->creators()->attach([$creator['id']], ['film_role_id' => $role]);
