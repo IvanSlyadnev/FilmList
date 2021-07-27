@@ -96,16 +96,14 @@
         align="right"
         width="48"
         class="
-          col-start-12
+          col-start-11 col-span-2
           m-2
           flex
           items-center
-          justify-center
           text-gray-500
           rounded
           transition
-          delay-50
-          hover:bg-white
+          justify-end
         "
       >
         <template #trigger>
@@ -116,9 +114,12 @@
               text-sm
               border-2 border-transparent
               rounded-full
+              items-end
               focus:outline-none
+              delay-50
               focus:border-gray-300
               transition
+              hover:bg-white
             "
           >
             <img
@@ -148,7 +149,12 @@
                 transition
               "
             >
-              {{ $page.props.user.name }}
+              <div
+                style="max-width: 180px"
+                class="overflow-ellipsis overflow-hidden whitespace-nowrap"
+              >
+                {{ $page.props.user.name }}
+              </div>
 
               <svg
                 class="ml-2 -mr-0.5 h-4 w-4"
