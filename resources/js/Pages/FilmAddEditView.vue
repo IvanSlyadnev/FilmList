@@ -351,7 +351,7 @@ export default {
       this.fields = Object.assign(
         {},
         {
-          id: "new",
+          id: 0,
           name: "",
           year: "",
           budget: "",
