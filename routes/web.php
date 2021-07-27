@@ -20,7 +20,6 @@ use App\Http\Controllers\CommentController;
 */
 
 Route::get('/', function () {
-    logger()->info("aaaa");
     return redirect()->route('films.index');
 });
 
