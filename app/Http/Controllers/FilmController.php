@@ -61,14 +61,14 @@ class FilmController extends Controller
     public function store(FilmRequest $request)
     {
         $this->authorize('create', Film::class);
-        $parametrs = collect($request->film)->only((new Film())->getFillable())->toArray();
+        /*$parametrs = collect($request->film)->only((new Film())->getFillable())->toArray();
         $parametrs['user_id'] = $request->user()->id;
         if ($film = Film::find($request->film['id'])) {
             $film->update($parametrs);
         } else {
             $film = Film::create($parametrs);
         }
-        /*$film->creators()->detach();
+        $film->creators()->detach();
         foreach ($request->film['creators'] as $creator) {
             foreach ($creator['roles'] as $role) {
                 $film->creators()->attach([$creator['id']], ['film_role_id' => $role]);
@@ -77,7 +77,7 @@ class FilmController extends Controller
         $film->genres()->sync($request->film['genres']);
         $film->countries()->sync($request->film['countries']);*/
 
-        return response(['id' => $film->id]);
+        return response(['id' => 1]);
     }
 
     /**
