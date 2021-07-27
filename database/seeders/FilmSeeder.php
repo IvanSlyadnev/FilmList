@@ -24,7 +24,6 @@ class FilmSeeder extends Seeder
                 'user_id' => 1,
             ],
             [
-
                 'id' => 2,
                 'name' => 'Фильм 2',
                 'year' => 2000,
@@ -32,15 +31,6 @@ class FilmSeeder extends Seeder
                 'length' => 100,
                 'user_id' => 1,
             ],
-            [
-
-                'id' => 3,
-                'name' => 'Фильм 3',
-                'year' => 2000,
-                'budget' => 1000,
-                'length' => 100,
-                'user_id' => 1,
-            ]
         ];
         foreach ($films as $film) {
             DB::table('films')->insert([
