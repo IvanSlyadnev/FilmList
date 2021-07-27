@@ -77,7 +77,7 @@ class FilmController extends Controller
         $film->genres()->sync($request->film['genres']);
         $film->countries()->sync($request->film['countries']);
 
-        return response(['id' => 1]);
+        return response(['id' => $film->id]);
     }
 
     /**
