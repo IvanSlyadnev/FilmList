@@ -88,6 +88,8 @@ class FilmController extends Controller
      */
     public function show(Request $request,Film $film)
     {
+        logger()->info($film->viewed);
+        logger()->info(!$film->viewed()->where('user_id', $request->user()->id)->exists());
         if ($request->user() && !$film->viewed()->where('user_id', $request->user()->id)->exists()) {
             $film->viewed()->sync($request->user()->id);
             $film->update(['views' => $film->views+1]);
