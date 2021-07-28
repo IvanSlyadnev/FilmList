@@ -250,6 +250,10 @@
             <textarea
               v-model="commentValue"
               type="text"
+              :placeholder="
+                user != null ? '' : 'авторизуйтесь, чтобы оставлять комментарии'
+              "
+              :class="{ isLoadingClass: user == null }"
               class="
                 w-full
                 text-sm text-black
@@ -288,6 +292,7 @@ export default {
     "can_edit",
     "is_admin",
     "mark",
+    "user",
   ],
   layout: Layout,
   components: {
@@ -341,13 +346,20 @@ export default {
           window.location.reload();
         })
         .catch(() => {
-          alert("Произошла ошибка");
+          alert("Произошла ошибка, либо вы не авторизованы");
         });
     },
     setRatingHandler(rating) {
-      Axios.post(route("film.mark", this.film.id), {
-        mark: rating,
-      });
+      if (this.user != null) {
+        Axios.post(route("film.mark", this.film.id), {
+          mark: rating,
+        });
+      } else {
+        alert("Авторизируйтесь, чтобы оставлять оценки");
+        setTimeout(() => {
+          this.rate = 0;
+        }, 100);
+      }
     },
   },
   mounted() {
