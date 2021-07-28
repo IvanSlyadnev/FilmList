@@ -52,12 +52,6 @@ export default {
     return {
       fields: [
         {
-          isKey: true,
-          label: "ID",
-          field: "id",
-          sortable: true,
-        },
-        {
           isKey: false,
           label: "Название",
           field: "name",
