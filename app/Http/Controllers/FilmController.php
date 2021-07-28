@@ -107,7 +107,7 @@ class FilmController extends Controller
             'genres' => Genre::mapAll($film->genres),
             'countries' => Genre::mapAll($film->countries),
             'can_edit' => $request->user() ? $request->user()->canEditFilm($film) : false,
-            'is_admin' => $request->user()->isAdmin()
+            'is_admin' => $request->user() ? $request->user()->isAdmin() : false
         ]);
     }
 
