@@ -329,9 +329,17 @@ export default {
     saveButtonHandler() {
       this.isLoading = true;
       this.localErrors = Object.assign({}, defaultErrorsArray);
-      Axios.post(route("films.store"), {
-        film: this.fields,
-      })
+      Axios.post(
+        route("films.store"),
+        {
+          film: this.fields,
+        },
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      )
         .then((response) => {
           this.isLoading = false;
           window.location.replace(route("films.show", response.data.id));
