@@ -58,6 +58,27 @@
       </div>
       <div class="m-2 flex">
         <label class="text-md font-medium text-gray-500 m-2 w-1/5"
+          >Обложка
+        </label>
+        <input
+          class="
+            focus:border-light-blue-500
+            focus:ring-1 focus:ring-light-blue-500
+            focus:outline-none
+            w-4/5
+            bg-white
+            text-sm text-black
+            placeholder-gray-500
+            border border-gray-200
+            rounded-md
+            p-2
+          "
+          type="file"
+          @input="fields.image = $event.target.files[0]"
+        />
+      </div>
+      <div class="m-2 flex">
+        <label class="text-md font-medium text-gray-500 m-2 w-1/5"
           >Бюджет
         </label>
         <input
@@ -308,9 +329,17 @@ export default {
     saveButtonHandler() {
       this.isLoading = true;
       this.localErrors = Object.assign({}, defaultErrorsArray);
-      Axios.post(route("films.store"), {
-        film: this.fields,
-      })
+      Axios.post(
+        route("films.store"),
+        {
+          film: this.fields,
+        },
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      )
         .then((response) => {
           this.isLoading = false;
           window.location.replace(route("films.show", response.data.id));
@@ -353,6 +382,7 @@ export default {
         {
           id: 0,
           name: "",
+          image: "",
           year: "",
           budget: "",
           description: "",
